@@ -22,11 +22,6 @@ Welcome to **Pong Game**, a classic arcade remake built using pure HTML, CSS, an
 - `style.css`: Sleek, arcade-inspired visuals.
 - `game.js`: All the game logic, animation, and AI.
 
-## 🏆 Screenshots
-
-![Gameplay Preview](https://user-images.githubusercontent.com/yourusername/pong-preview.png)  
-*Classic Pong action!*
-
 ## ✨ Credits
 
 Game crafted by [GitHub Copilot](https://github.com/copilot) for [damris29](https://github.com/damris29).
