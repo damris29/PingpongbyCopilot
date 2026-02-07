@@ -1,0 +1,82 @@
+import { useEffect, useState } from "react";
+
+const trashEmojis = ["🧴", "🥤", "🛍️", "🥫", "🧃", "🍾"];
+
+function App() {
+  const [score, setScore] = useState(0);
+  const [time, setTime] = useState(30);
+  const [position, setPosition] = useState({ top: "50%", left: "50%" });
+  const [trash, setTrash] = useState(trashEmojis[0]);
+  const [gameOver, setGameOver] = useState(false);
+
+  useEffect(() => {
+    if (time === 0) {
+      setGameOver(true);
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setTime((t) => t - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [time]);
+
+  const randomizeTrash = () => {
+    setPosition({
+      top: Math.random() * 80 + "%",
+      left: Math.random() * 80 + "%",
+    });
+
+    setTrash(
+      trashEmojis[Math.floor(Math.random() * trashEmojis.length)]
+    );
+
+    setScore((s) => s + 1);
+  };
+
+  const resetGame = () => {
+    setScore(0);
+    setTime(30);
+    setGameOver(false);
+    setTrash(trashEmojis[0]);
+    setPosition({ top: "50%", left: "50%" });
+  };
+
+  return (
+    <div className="w-screen h-screen bg-blue-900 relative overflow-hidden text-white">
+      <div className="p-4 text-center">
+        <h1 className="text-3xl font-bold">🌊 Clean the Ocean</h1>
+        <p className="mt-2">Collected: {score}</p>
+        <p>Time left: {time}s</p>
+      </div>
+
+      {!gameOver && (
+        <div
+          onClick={randomizeTrash}
+          className="absolute cursor-pointer text-6xl hover:scale-125 transition-transform select-none"
+          style={position}
+        >
+          {trash}
+        </div>
+      )}
+
+      {gameOver && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/60">
+          <div className="text-center">
+            <h2 className="text-2xl mb-2">Ocean cleaned 🌱</h2>
+            <p className="mb-4">You collected {score} items</p>
+            <button
+              onClick={resetGame}
+              className="px-4 py-2 bg-green-500 text-black font-bold rounded hover:bg-green-400"
+            >
+              Play Again
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default App;
